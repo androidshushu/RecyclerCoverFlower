@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RecyclerCoverFlower</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_just_cover_flow">JustCoverFlowActivity</string>
+</resources>
