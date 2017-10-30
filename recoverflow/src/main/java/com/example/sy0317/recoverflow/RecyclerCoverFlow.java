@@ -7,48 +7,61 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
- * 继承RecyclerView重写{@link #getChildDrawingOrder(int, int)}对Item的绘制顺序进行控制
- *
- * @author wenshuhau (719711096@qq.com)
+ * Created by Administrator on 2017/10/27.
  */
 
 public class RecyclerCoverFlow extends RecyclerView {
     /**
      * 按下的X轴坐标
+     *
+     * @param context
      */
     private float mDownX;
 
     /**
      * 布局器构建者
+     *
+     * @param context
      */
     private CoverFlowLayoutManger.Builder mManagerBuilder;
 
+    /**
+     * 构造方法，每一个都需要进行初始化，调用init();
+     * @param context
+     */
     public RecyclerCoverFlow(Context context) {
         super(context);
         init();
     }
-
+    /**
+     * 构造方法，每一个都需要进行初始化，调用init();
+     * @param context
+     */
     public RecyclerCoverFlow(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
-
+    /**
+     * 构造方法，每一个都需要进行初始化，调用init();
+     * @param context
+     */
     public RecyclerCoverFlow(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
 
     private void init() {
-        createManageBuilder();
+        createManagerBuilder();
         setLayoutManager(mManagerBuilder.build());
-        setChildrenDrawingOrderEnabled(true); //开启重新排序
+        setChildrenDrawingOrderEnabled(true);//开启重新排序
         setOverScrollMode(OVER_SCROLL_NEVER);
+
     }
 
     /**
      * 创建布局构建器
      */
-    private void createManageBuilder() {
+    private void createManagerBuilder() {
         if (mManagerBuilder == null) {
             mManagerBuilder = new CoverFlowLayoutManger.Builder();
         }
@@ -56,41 +69,42 @@ public class RecyclerCoverFlow extends RecyclerView {
 
     /**
      * 设置是否为普通平面滚动
-     * @param isFlat true:平面滚动；false:叠加缩放滚动
+     * true:平面滚动 false: 叠加缩放滚动
      */
-    public void setFlatFlow(boolean isFlat) {
-        createManageBuilder();
+    public void setFlatFlow(boolean isFlat){
+        createManagerBuilder();
         mManagerBuilder.setFlat(isFlat);
         setLayoutManager(mManagerBuilder.build());
     }
 
     /**
      * 设置Item灰度渐变
-     * @param greyItem true:Item灰度渐变；false:Item灰度不变
+     * true:Item灰度渐变 false: Items灰度不变
      */
-    public void setGreyItem(boolean greyItem) {
-        createManageBuilder();
+
+    public void setGreyItem(boolean greyItem){
+        createManagerBuilder();
         mManagerBuilder.setGreyItem(greyItem);
         setLayoutManager(mManagerBuilder.build());
     }
 
     /**
-     * 设置Item灰度渐变
-     * @param alphaItem true:Item半透渐变；false:Item透明度不变
+     * 设置Item透明渐变
+     * true:设置Item半透明渐变 false: Item透明度不变
      */
-    public void setAlphaItem(boolean alphaItem) {
-        createManageBuilder();
+
+    public void setAlphaItem(boolean alphaItem){
+        createManagerBuilder();
         mManagerBuilder.setAlphaItem(alphaItem);
         setLayoutManager(mManagerBuilder.build());
     }
 
+
     /**
-     * 设置Item的间隔比例
-     * @param intervalRatio Item间隔比例。
-     *                      即：item的宽 x intervalRatio
+     * 设置Item的间隔比例：item的宽x intervalRatio
      */
-    public void setIntervalRatio(float intervalRatio) {
-        createManageBuilder();
+    public void setIntervalRatio(float intervalRatio){
+        createManagerBuilder();
         mManagerBuilder.setIntervalRatio(intervalRatio);
         setLayoutManager(mManagerBuilder.build());
     }
@@ -119,17 +133,16 @@ public class RecyclerCoverFlow extends RecyclerView {
         }
         return order;
     }
-
     /**
      * 获取LayoutManger，并强制转换为CoverFlowLayoutManger
      */
     public CoverFlowLayoutManger getCoverFlowLayout() {
         return ((CoverFlowLayoutManger)getLayoutManager());
     }
-
     /**
-     * 获取被选中的Item位置
+     * 设置选中的Item位置
      */
+
     public int getSelectedPos() {
         return getCoverFlowLayout().getSelectedPos();
     }
@@ -144,7 +157,7 @@ public class RecyclerCoverFlow extends RecyclerView {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
+        switch (ev.getAction()){
             case MotionEvent.ACTION_DOWN:
                 mDownX = ev.getX();
                 getParent().requestDisallowInterceptTouchEvent(true); //设置父类不拦截滑动事件
@@ -164,3 +177,4 @@ public class RecyclerCoverFlow extends RecyclerView {
         return super.dispatchTouchEvent(ev);
     }
 }
+
